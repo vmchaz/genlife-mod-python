@@ -7,7 +7,7 @@
 #define ftFOOD 3
 #define ftHAZARD 4
 
-#define fstPREY 0
-#define fstPREDATOR 1
+#define fstPREY 1
+#define fstPREDATOR 2
 
 #endif

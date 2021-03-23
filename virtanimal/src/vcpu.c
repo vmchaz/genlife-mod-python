@@ -553,24 +553,71 @@ int lf_set_action_turn_move_backward(VCPU * vcpu, Instruction * instruction, Uni
 
 int lf_detect_obstacle(VCPU * vcpu, Instruction * instruction, UnitVarStruct * u, CallBackInfo * cb)
 {
-    printf("detect obstacle start\n");
+    //printf("detect obstacle start\n");
     FieldPart fp;
-    execute_callback(cb, u->x, u->y, 0, 1, &fp);
+    int shape = 1;
+    int distance = 1;
+    int fill_flags = 1;
+    execute_callback(cb, ftOBSTACLE, 0, u->x, u->y, u->direction, shape, distance, fill_flags, &fp);
+    if (fp.flags_filled == 1)
+    {
+        //printf("f:%d r:%d b:%d l:%d\n", fp.f_forward, fp.f_right, fp.f_back, fp.f_left);
+        int res = (fp.f_forward) | (fp.f_right << 1) | (fp.f_back << 2) | (fp.f_left << 3);        
+        vcpu->flags = (vcpu->flags & 0x0F) | (res << 16);
+        //printf("Flags: %x\n", vcpu->flags);
+    }
+    else
+        printf("Obstacle presence flags are not set!\nDetect algorithm is not implemented yet\n");
     /*int r = field_detect_obstacle(field, u->x, u->y, u->direction);
     vcpu->flags = (vcpu->flags & 0x0f) | (r << 16);*/
-    printf("detect obstacle end\n");
+    //printf("detect obstacle end\n");
     return 0;
 }
 
 int lf_detect_food(VCPU * vcpu, Instruction * instruction, UnitVarStruct * u, CallBackInfo * cb)
 {
-    /*int r = field_detect_food(field, u->x, u->y, u->direction);
+    //printf("detect obstacle start\n");
+    FieldPart fp;
+    int shape = 1;
+    int distance = 1;
+    int fill_flags = 1;
+    execute_callback(cb, ftFOOD, 0, u->x, u->y, u->direction, shape, distance, fill_flags, &fp);
+    if (fp.flags_filled == 1)
+    {
+        //printf("f:%d r:%d b:%d l:%d\n", fp.f_forward, fp.f_right, fp.f_back, fp.f_left);
+        int res = (fp.f_forward) | (fp.f_right << 1) | (fp.f_back << 2) | (fp.f_left << 3);        
+        vcpu->flags = (vcpu->flags & 0x0F) | (res << 16);
+        //printf("Flags: %x\n", vcpu->flags);
+    }
+    else
+        printf("Food presence flags are not set!\nDetect algorithm is not implemented yet\n");
+    /*int r = field_detect_obstacle(field, u->x, u->y, u->direction);
     vcpu->flags = (vcpu->flags & 0x0f) | (r << 16);*/
+    //printf("detect obstacle end\n");
     return 0;
 }
 
 int lf_detect_hazard(VCPU * vcpu, Instruction * instruction, UnitVarStruct * u, CallBackInfo * cb)
 {
+    //printf("detect obstacle start\n");
+    FieldPart fp;
+    int shape = 1;
+    int distance = 1;
+    int fill_flags = 1;
+    execute_callback(cb, ftHAZARD, 0, u->x, u->y, u->direction, shape, distance, fill_flags, &fp);
+    if (fp.flags_filled == 1)
+    {
+        //printf("f:%d r:%d b:%d l:%d\n", fp.f_forward, fp.f_right, fp.f_back, fp.f_left);
+        int res = (fp.f_forward) | (fp.f_right << 1) | (fp.f_back << 2) | (fp.f_left << 3);        
+        vcpu->flags = (vcpu->flags & 0x0F) | (res << 16);
+        //printf("Flags: %x\n", vcpu->flags);
+    }
+    else
+        printf("Hazard presence flags are not set!\nDetect algorithm is not implemented yet\n");
+    /*int r = field_detect_obstacle(field, u->x, u->y, u->direction);
+    vcpu->flags = (vcpu->flags & 0x0f) | (r << 16);*/
+    //printf("detect obstacle end\n");
+    return 0;
     /*int r = field_detect_hazard(field, u->x, u->y, u->direction);
     vcpu->flags = (vcpu->flags & 0x0f) | (r << 16);*/
     return 0;
@@ -578,6 +625,25 @@ int lf_detect_hazard(VCPU * vcpu, Instruction * instruction, UnitVarStruct * u, 
 
 int lf_detect_predator(VCPU * vcpu, Instruction * instruction, UnitVarStruct * u, CallBackInfo * cb)
 {
+    //printf("detect obstacle start\n");
+    FieldPart fp;
+    int shape = 1;
+    int distance = 1;
+    int fill_flags = 1;
+    execute_callback(cb, ftANIMAL, fstPREDATOR, u->x, u->y, u->direction, shape, distance, fill_flags, &fp);
+    if (fp.flags_filled == 1)
+    {
+        //printf("f:%d r:%d b:%d l:%d\n", fp.f_forward, fp.f_right, fp.f_back, fp.f_left);
+        int res = (fp.f_forward) | (fp.f_right << 1) | (fp.f_back << 2) | (fp.f_left << 3);        
+        vcpu->flags = (vcpu->flags & 0x0F) | (res << 16);
+        //printf("Flags: %x\n", vcpu->flags);
+    }
+    else
+        printf("Predator presence flags are not set!\nDetect algorithm is not implemented yet\n");
+    /*int r = field_detect_obstacle(field, u->x, u->y, u->direction);
+    vcpu->flags = (vcpu->flags & 0x0f) | (r << 16);*/
+    //printf("detect obstacle end\n");
+    return 0;
     /*int r = field_detect_predator(field, u->x, u->y, u->direction);
     vcpu->flags = (vcpu->flags & 0x0f) | (r << 16);*/
     return 0;
@@ -585,6 +651,25 @@ int lf_detect_predator(VCPU * vcpu, Instruction * instruction, UnitVarStruct * u
 
 int lf_detect_prey(VCPU * vcpu, Instruction * instruction, UnitVarStruct * u, CallBackInfo * cb)
 {
+    //printf("detect obstacle start\n");
+    FieldPart fp;
+    int shape = 1;
+    int distance = 1;
+    int fill_flags = 1;
+    execute_callback(cb, ftANIMAL, fstPREY, u->x, u->y, u->direction, shape, distance, fill_flags, &fp);
+    if (fp.flags_filled == 1)
+    {
+        //printf("f:%d r:%d b:%d l:%d\n", fp.f_forward, fp.f_right, fp.f_back, fp.f_left);
+        int res = (fp.f_forward) | (fp.f_right << 1) | (fp.f_back << 2) | (fp.f_left << 3);        
+        vcpu->flags = (vcpu->flags & 0x0F) | (res << 16);
+        //printf("Flags: %x\n", vcpu->flags);
+    }
+    else
+        printf("Prey presence flags are not set!\nDetect algorithm is not implemented yet\n");
+    /*int r = field_detect_obstacle(field, u->x, u->y, u->direction);
+    vcpu->flags = (vcpu->flags & 0x0f) | (r << 16);*/
+    //printf("detect obstacle end\n");
+    return 0;
     /*int r = field_detect_prey(field, u->x, u->y, u->direction);
     vcpu->flags = (vcpu->flags & 0x0f) | (r << 16);*/
     return 0;
@@ -595,26 +680,116 @@ int lf_detect_prey(VCPU * vcpu, Instruction * instruction, UnitVarStruct * u, Ca
 
 int lf_detect_obstacle_far(VCPU * vcpu, Instruction * instruction, UnitVarStruct * u, CallBackInfo * cb)
 {
+    //printf("detect obstacle start\n");
+    FieldPart fp;
+    int shape = 2;
+    int distance = 4;
+    int fill_flags = 1;
+    execute_callback(cb, ftOBSTACLE, 0, u->x, u->y, u->direction, shape, distance, fill_flags, &fp);
+    if (fp.flags_filled == 1)
+    {
+        //printf("f:%d r:%d b:%d l:%d\n", fp.f_forward, fp.f_right, fp.f_back, fp.f_left);
+        int res = (fp.f_forward) | (fp.f_right << 1) | (fp.f_back << 2) | (fp.f_left << 3);        
+        vcpu->flags = (vcpu->flags & 0x0F) | (res << 16);
+        //printf("Flags: %x\n", vcpu->flags);
+    }
+    else
+        printf("Obstacle presence flags are not set!\nDetect algorithm is not implemented yet\n");
+    /*int r = field_detect_obstacle(field, u->x, u->y, u->direction);
+    vcpu->flags = (vcpu->flags & 0x0f) | (r << 16);*/
+    //printf("detect obstacle end\n");
     return 0;
 }
 
 int lf_detect_food_far(VCPU * vcpu, Instruction * instruction, UnitVarStruct * u, CallBackInfo * cb)
 {
+    //printf("detect obstacle start\n");
+    FieldPart fp;
+    int shape = 2;
+    int distance = 4;
+    int fill_flags = 1;
+    execute_callback(cb, ftFOOD, 0, u->x, u->y, u->direction, shape, distance, fill_flags, &fp);
+    if (fp.flags_filled == 1)
+    {
+        //printf("f:%d r:%d b:%d l:%d\n", fp.f_forward, fp.f_right, fp.f_back, fp.f_left);
+        int res = (fp.f_forward) | (fp.f_right << 1) | (fp.f_back << 2) | (fp.f_left << 3);        
+        vcpu->flags = (vcpu->flags & 0x0F) | (res << 16);
+        //printf("Flags: %x\n", vcpu->flags);
+    }
+    else
+        printf("Obstacle presence flags are not set!\nDetect algorithm is not implemented yet\n");
+    /*int r = field_detect_obstacle(field, u->x, u->y, u->direction);
+    vcpu->flags = (vcpu->flags & 0x0f) | (r << 16);*/
+    //printf("detect obstacle end\n");
     return 0;
 }
 
 int lf_detect_hazard_far(VCPU * vcpu, Instruction * instruction, UnitVarStruct * u, CallBackInfo * cb)
 {
+    //printf("detect obstacle start\n");
+    FieldPart fp;
+    int shape = 2;
+    int distance = 4;
+    int fill_flags = 1;
+    execute_callback(cb, ftHAZARD, 0, u->x, u->y, u->direction, shape, distance, fill_flags, &fp);
+    if (fp.flags_filled == 1)
+    {
+        //printf("f:%d r:%d b:%d l:%d\n", fp.f_forward, fp.f_right, fp.f_back, fp.f_left);
+        int res = (fp.f_forward) | (fp.f_right << 1) | (fp.f_back << 2) | (fp.f_left << 3);        
+        vcpu->flags = (vcpu->flags & 0x0F) | (res << 16);
+        //printf("Flags: %x\n", vcpu->flags);
+    }
+    else
+        printf("Obstacle presence flags are not set!\nDetect algorithm is not implemented yet\n");
+    /*int r = field_detect_obstacle(field, u->x, u->y, u->direction);
+    vcpu->flags = (vcpu->flags & 0x0f) | (r << 16);*/
+    //printf("detect obstacle end\n");
     return 0;
 }
 
 int lf_detect_predator_far(VCPU * vcpu, Instruction * instruction, UnitVarStruct * u, CallBackInfo * cb)
 {
+    //printf("detect obstacle start\n");
+    FieldPart fp;
+    int shape = 2;
+    int distance = 4;
+    int fill_flags = 1;
+    execute_callback(cb, ftANIMAL, fstPREDATOR, u->x, u->y, u->direction, shape, distance, fill_flags, &fp);
+    if (fp.flags_filled == 1)
+    {
+        //printf("f:%d r:%d b:%d l:%d\n", fp.f_forward, fp.f_right, fp.f_back, fp.f_left);
+        int res = (fp.f_forward) | (fp.f_right << 1) | (fp.f_back << 2) | (fp.f_left << 3);        
+        vcpu->flags = (vcpu->flags & 0x0F) | (res << 16);
+        //printf("Flags: %x\n", vcpu->flags);
+    }
+    else
+        printf("Obstacle presence flags are not set!\nDetect algorithm is not implemented yet\n");
+    /*int r = field_detect_obstacle(field, u->x, u->y, u->direction);
+    vcpu->flags = (vcpu->flags & 0x0f) | (r << 16);*/
+    //printf("detect obstacle end\n");
     return 0;
 }
 
 int lf_detect_prey_far(VCPU * vcpu, Instruction * instruction, UnitVarStruct * u, CallBackInfo * cb)
 {
+    //printf("detect obstacle start\n");
+    FieldPart fp;
+    int shape = 2;
+    int distance = 4;
+    int fill_flags = 1;
+    execute_callback(cb, ftANIMAL, fstPREY, u->x, u->y, u->direction, shape, distance, fill_flags, &fp);
+    if (fp.flags_filled == 1)
+    {
+        //printf("f:%d r:%d b:%d l:%d\n", fp.f_forward, fp.f_right, fp.f_back, fp.f_left);
+        int res = (fp.f_forward) | (fp.f_right << 1) | (fp.f_back << 2) | (fp.f_left << 3);        
+        vcpu->flags = (vcpu->flags & 0x0F) | (res << 16);
+        //printf("Flags: %x\n", vcpu->flags);
+    }
+    else
+        printf("Obstacle presence flags are not set!\nDetect algorithm is not implemented yet\n");
+    /*int r = field_detect_obstacle(field, u->x, u->y, u->direction);
+    vcpu->flags = (vcpu->flags & 0x0f) | (r << 16);*/
+    //printf("detect obstacle end\n");
     return 0;
 }
 
