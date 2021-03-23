@@ -9,6 +9,8 @@
 #include "animal.h"
 #include "animal_repr.h"
 
+#include "callbackinfo.h"
+
 
 PyObject * testmod_func_get_instruction_count(PyObject *self, PyObject *args) 
 {
@@ -189,8 +191,9 @@ PyObject * testmod_func_animal_set_instruction_seq(PyObject * self, PyObject *ar
 PyObject * testmod_animal_run_tick(PyObject *self, PyObject *args)
 {
     Animal_Repr * animal_r = NULL;
-    PyObject * f = NULL;
-    PyObject * cb = NULL;
+    PyObject * cb_func = NULL;
+    PyObject * cb_argument = NULL;
+    PyObject * cb_fieldpart = NULL;
         
     int id;
     int energy;
@@ -200,12 +203,27 @@ PyObject * testmod_animal_run_tick(PyObject *self, PyObject *args)
     int maxsteps = 1;
     
 
-    if (! PyArg_ParseTuple(args, "OOO", &animal_r, &cb, &f))
+    if (! PyArg_ParseTuple(args, "OOOO", &animal_r, &cb_func, &cb_argument, &cb_fieldpart))
         Py_RETURN_NONE;
+        
+    CallBackInfo ci;
+    
+    ci.cb_function = cb_func;
+    ci.cb_argument = cb_argument;
+    ci.cb_fieldpart = cb_fieldpart;
+    
+    Py_XINCREF(cb_func);
+    Py_XINCREF(cb_argument);
+    Py_XINCREF(cb_fieldpart);
+    //printf("cb_func=%p cb_arg=%p cb_fp=%p\n", cb_func, cb_argument, cb_fieldpart);
     
     Animal * animal = &animal_r->animal;
     
-    animal_run_tick(animal);
+    animal_run_tick(animal, &ci);
+    
+    Py_XDECREF(cb_func);
+    Py_XDECREF(cb_argument);
+    Py_XDECREF(cb_fieldpart);
     
     Py_RETURN_NONE;
 }
@@ -235,7 +253,7 @@ PyObject * testmod_vcpu_run(PyObject *self, PyObject *args)
     VCPU * vcpu = &vcpu_repr->vcpu;
     InstructionSequence * sequence = &sequence_repr->sequence;
     UnitVarStruct * u = &u_repr->unitvarstruct;
-    int res = vcpu_run(vcpu, sequence, u, false, maxsteps);
+    int res = vcpu_run(vcpu, sequence, u, NULL, false, maxsteps);
     
     return Py_BuildValue("i", res);
 }
@@ -279,4 +297,73 @@ PyObject * testmod_vcpu_get_state(PyObject *self, PyObject *args)
         vcpu->flags, vcpu->stop_flag);
     
     return Py_BuildValue("s", buf);
+}
+
+
+PyObject * testmod_callback(PyObject *self, PyObject *args) 
+{
+    PyObject * cb_func = NULL;    
+    PyObject * cb_argument = NULL;
+    PyObject * cb_buffer = NULL;
+    char * s0;
+
+    if (! PyArg_ParseTuple(args, "OOO", &cb_func, &cb_argument, &cb_buffer))
+        Py_RETURN_NONE;
+        
+    if (!PyCallable_Check(cb_func)) 
+    {
+        PyErr_SetString(PyExc_TypeError, "parameter must be callable");
+        return NULL;
+    }
+    
+    printf("String: %s cb_func: %p\n", s0, cb_func);
+    
+    printf("cb_argument = %p\n", cb_argument);
+    
+    printf("Increasing refs to cb_func\n");
+    Py_XINCREF(cb_func);
+    
+    printf("Increasing refs to cb_argument\n");
+    Py_XINCREF(cb_argument);
+    
+    printf("Increasing refs to cb_argument\n");
+    Py_XINCREF(cb_buffer);    
+    
+    
+    
+    PyObject *arglist;
+    PyObject *result;
+    
+    printf("Creating arglist\n");
+    int n = 12345;
+    arglist = Py_BuildValue("(OO)", cb_argument, cb_buffer);
+    printf("Arglist = %p\n", arglist);
+    
+    
+    printf("Calling cb_func\n");
+    result = PyObject_CallObject(cb_func, arglist);
+    if (result)
+    {
+        printf("Result = %p\n", result);
+        printf("Releasing result\n");    
+        Py_XDECREF(result);
+    }
+    else
+        printf("Result = null\n");
+    
+    printf("Releasing arglist\n");
+    Py_XDECREF(arglist);
+
+    //if PyArg_ParseTuple
+    
+    printf("Decreasing refs to cb_func\n");
+    Py_XDECREF(cb_func);
+        
+    Py_XDECREF(cb_argument);
+    printf("Decreasing refs to cb_argument\n");
+    
+    Py_XDECREF(cb_buffer);
+    printf("Decreasing refs to cb_buffer\n");
+
+    Py_RETURN_NONE;
 }

@@ -1,5 +1,5 @@
 from enum import IntEnum, auto
-from instructions import InstructionSet, Instruction, DirectionFlags
+from instructions import InstructionSet, Instruction, DirectionFlags, cInstructionArguments, ArgumentTypes
 
 def flag_str_to_number(s):
     s = s.upper()
@@ -85,25 +85,20 @@ class Assembler:
                     
             instruction = Instruction()
             instruction.cmd = self.str_to_command[cmd]
+
+            if len(arg_list) < len(cInstructionArguments[instruction.cmd]):
+                raise Exception("Too few arguments")
+
+            if len(arg_list) > len(cInstructionArguments[instruction.cmd]):
+                raise Exception("Too many arguments")
             
-            if cmd.endswith("_RR"):
-                instruction.reg_dest = get_reg(main_args[0])
-                instruction.reg_src = get_reg(main_args[1])
-            elif cmd.endswith("_RI"):
-                instruction.reg_dest = get_reg(main_args[0])
-                instruction.imm = get_imm(main_args[1])
-            elif cmd.endswith("_RA"):
-                instruction.reg_dest = get_reg(main_args[0])
-            elif cmd.endswith("_AR"):
-                instruction.reg_src = get_reg(main_args[0])
-            elif cmd.endswith("_AI"):
-                instruction.imm = get_reg(main_args[0])
-            elif cmd.endswith("_R"):
-                instruction.reg_dest = get_reg(main_args[0])
-            elif cmd.endswith("_A"):
-                pass
-            elif cmd.endswith("_I"):
-                instruction.imm = get_reg(main_args[0])
+            for arg_type, arg_in_command in zip(cInstructionArguments[instruction.cmd], arg_list):
+                if arg_type == ArgumentTypes.REG_DEST:
+                    instruction.reg_dest = get_reg(arg_in_command)
+                elif arg_type == ArgumentTypes.REG_SRC:
+                    instruction.reg_src = get_reg(arg_in_command)
+                elif arg_type == ArgumentTypes.IMM:
+                    instruction.imm = get_imm(arg_in_command)
             
             for f in allow_flags:                
                 fn = flag_str_to_number(f)

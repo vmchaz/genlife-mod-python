@@ -52,6 +52,22 @@ class Field:
         self.height = height
         self.size = width*height
         self.cells = [FieldObjectTypes.NONE] * self.size
+        self.obj_cells = [[]] * self.size
+        
+    def move_object(self, obj, x, y, new_x, new_y):
+        obj_cell = self.obj_cells[y * self.width + x]
+        i = obj_cell.index(obj)        
+        if i >= 0:
+            obj_cell.pop(i)
+            new_obj_cell = self.obj_cells[new_y * self.width + new_x]
+            
+    def is_obstacle(self, x, y):
+        obj_cell = self.obj_cells[y * self.width + x]
+        for obj in obj_cell:
+            if obj.obstacle_level >= 1:
+                return True
+        return False
+        
 
 def get_field_cell(field:Field, x:int, y:int):
     if (x >= 0) and (x < field.width) and (y >= 0) and (y < field.height):

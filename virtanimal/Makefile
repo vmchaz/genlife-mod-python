@@ -20,8 +20,11 @@ OBJS = $(BUILD)/test.o \
 	$(BUILD)/vcpu_repr.o \
 	$(BUILD)/unitvarstruct.o \
 	$(BUILD)/unitvarstruct_repr.o \
+	$(BUILD)/fieldpart.o \
+	$(BUILD)/fieldpart_repr.o \
 	$(BUILD)/instructionsequence.o \
 	$(BUILD)/instructionsequence_repr.o \
+    $(BUILD)/callbackinfo.o \
 	$(BUILD)/advanced_func.o
 
 BINS = $(BUILD)/virtanimal.so
@@ -39,6 +42,7 @@ $(BUILD)/virtanimal.so: \
 $(BUILD)/test.o: $(DEPS) \
 	$(SRC)/test.c
 	$(CC) -c $(CFLAGS) -fPIC $(INCS) -o $(BUILD)/test.o $(SRC)/test.c
+	
 	
 $(BUILD)/animal.o: $(DEPS) \
 	$(SRC)/animal.c
@@ -64,6 +68,14 @@ $(BUILD)/unitvarstruct_repr.o: $(DEPS) \
 	$(SRC)/unitvarstruct_repr.c
 	$(CC) -c $(CFLAGS) -fPIC $(INCS) -o $(BUILD)/unitvarstruct_repr.o $(SRC)/unitvarstruct_repr.c
 	
+$(BUILD)/fieldpart.o: $(DEPS) \
+	$(SRC)/fieldpart.c
+	$(CC) -c $(CFLAGS) -fPIC $(INCS) -o $(BUILD)/fieldpart.o $(SRC)/fieldpart.c
+	
+$(BUILD)/fieldpart_repr.o: $(DEPS) \
+	$(SRC)/fieldpart_repr.c
+	$(CC) -c $(CFLAGS) -fPIC $(INCS) -o $(BUILD)/fieldpart_repr.o $(SRC)/fieldpart_repr.c
+	
 $(BUILD)/instructionsequence.o: $(DEPS) \
 	$(SRC)/instructionsequence.c
 	$(CC) -c $(CFLAGS) -fPIC $(INCS) -o $(BUILD)/instructionsequence.o $(SRC)/instructionsequence.c
@@ -71,6 +83,10 @@ $(BUILD)/instructionsequence.o: $(DEPS) \
 $(BUILD)/instructionsequence_repr.o: $(DEPS) \
 	$(SRC)/instructionsequence_repr.c
 	$(CC) -c $(CFLAGS) -fPIC $(INCS) -o $(BUILD)/instructionsequence_repr.o $(SRC)/instructionsequence_repr.c
+	
+$(BUILD)/callbackinfo.o: $(DEPS) \
+	$(SRC)/callbackinfo.c
+	$(CC) -c $(CFLAGS) -fPIC $(INCS) -o $(BUILD)/callbackinfo.o $(SRC)/callbackinfo.c
 	
 $(BUILD)/advanced_func.o: $(DEPS) \
 	$(SRC)/advanced_func.c

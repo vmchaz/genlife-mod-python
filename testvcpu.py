@@ -12,8 +12,11 @@ mov_ar r0
 def main():
     a = Assembler()
     r = a.AssembleText(asm_text)
-    r2 = a.AssembleInstruction("add_rr r0, r1")
-    print(r2)
+    #for inst in r:
+    #    print(inst.to_code())
+    #r2 = a.AssembleInstruction("add_rr r0, r1")
+    #print(r2)
+    
     vcpu = VCPU()
     vcpu.init_instruction_handlers(cInstructionHandlersMap)
     vcpu.init_instructions_sequence(r)
