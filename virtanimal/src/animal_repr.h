@@ -8,6 +8,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <stdbool.h>
+#include "fieldobjecttypes.h"
 #include "animal.h"
 #include "instructionsequence.h"
 #include "unitvarstruct.h"
@@ -17,6 +18,7 @@ extern PyTypeObject Animal_Repr_Type;
 typedef struct {
     PyObject_HEAD
     int local_type;
+    int local_subtype;
     Animal animal;
 } Animal_Repr;
 

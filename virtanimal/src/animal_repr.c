@@ -71,6 +71,8 @@ static int Animal_Repr_init(Animal_Repr *self, PyObject *args, PyObject *kwds) {
     self->animal.unitvarstruct.action = actSTAY;
     self->animal.unitvarstruct.action_p = 0;
     self->animal.unitvarstruct.use_action_p = 0;
+    self->local_type = ftANIMAL;
+    self->local_subtype = fstPREY;
 
     return 0;
 }
@@ -91,6 +93,7 @@ static PyMemberDef Animal_Repr_members[] =
     {"stop_on_action", T_INT, offsetof(Animal_Repr, animal.stop_on_action), 0, "int"},
     {"maxsteps", T_INT, offsetof(Animal_Repr, animal.maxsteps), 0, "int"},
     {"local_type", T_INT, offsetof(Animal_Repr, local_type), 0, "int"},
+    {"local_subtype", T_INT, offsetof(Animal_Repr, local_subtype), 0, "int"},
     {NULL}
 };
 

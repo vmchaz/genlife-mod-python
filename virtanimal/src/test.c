@@ -12,6 +12,9 @@
 #include "unitvarstruct_repr.h"
 #include "animal_repr.h"
 #include "fieldpart_repr.h"
+#include "food_repr.h"
+#include "obstacle_repr.h"
+#include "hazard_repr.h"
 
 #include "advanced_func.h"
 
@@ -71,6 +74,13 @@ PyMODINIT_FUNC PyInit_virtanimal(void)
         return NULL;
     if (PyType_Ready(&FieldPart_Repr_Type) < 0)
         return NULL;
+    if (PyType_Ready(&Food_Repr_Type) < 0)
+        return NULL;
+    if (PyType_Ready(&Obstacle_Repr_Type) < 0)
+        return NULL;
+    if (PyType_Ready(&Hazard_Repr_Type) < 0)
+        return NULL;
+        
 
     
     Py_INCREF(&VCPU_Repr_Type);
@@ -78,12 +88,18 @@ PyMODINIT_FUNC PyInit_virtanimal(void)
     Py_INCREF(&UnitVarStruct_Repr_Type);
     Py_INCREF(&Animal_Repr_Type);
     Py_INCREF(&FieldPart_Repr_Type);
+    Py_INCREF(&Food_Repr_Type);
+    Py_INCREF(&Obstacle_Repr_Type);
+    Py_INCREF(&Hazard_Repr_Type);
     
     PyModule_AddObject(mod, "VCPU", (PyObject *) &VCPU_Repr_Type);
     PyModule_AddObject(mod, "InstructionSequence", (PyObject *) &InstructionSequence_Repr_Type);
     PyModule_AddObject(mod, "UnitVarStruct", (PyObject *) &UnitVarStruct_Repr_Type);
     PyModule_AddObject(mod, "Animal", (PyObject *) &Animal_Repr_Type);
     PyModule_AddObject(mod, "FieldPart", (PyObject *) &FieldPart_Repr_Type);
+    PyModule_AddObject(mod, "Food", (PyObject *) &Food_Repr_Type);
+    PyModule_AddObject(mod, "Obstacle", (PyObject *) &Obstacle_Repr_Type);
+    PyModule_AddObject(mod, "Hazard", (PyObject *) &Hazard_Repr_Type);
     
     return mod;
 }
