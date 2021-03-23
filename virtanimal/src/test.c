@@ -28,6 +28,9 @@ static PyMethodDef methods[] = {
     
     {"animal_run_tick", testmod_animal_run_tick, METH_VARARGS, "Function animal_run_tick"},
     
+    {"animal_get_vcpu", testmod_func_animal_get_vcpu, METH_VARARGS, "Function animal_get_vcpu"},    
+    {"animal_set_vcpu", testmod_func_animal_set_vcpu, METH_VARARGS, "Function animal_set_vcpu"},
+    
     {"vcpu_run", testmod_vcpu_run, METH_VARARGS, "Function vcpu_step"},
     {"vcpu_get_state", testmod_vcpu_get_state, METH_VARARGS, "Function vcpu_get_state"},
     {"vcpu_reset", testmod_vcpu_reset, METH_VARARGS, "Function vcpu_reset"},

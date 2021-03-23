@@ -24,7 +24,7 @@ OBJS = $(BUILD)/test.o \
 	$(BUILD)/fieldpart_repr.o \
 	$(BUILD)/instructionsequence.o \
 	$(BUILD)/instructionsequence_repr.o \
-    $(BUILD)/callbackinfo.o \
+	$(BUILD)/callbackinfo.o \
 	$(BUILD)/advanced_func.o
 
 BINS = $(BUILD)/virtanimal.so

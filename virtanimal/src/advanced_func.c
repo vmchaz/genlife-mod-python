@@ -186,6 +186,42 @@ PyObject * testmod_func_animal_set_instruction_seq(PyObject * self, PyObject *ar
     Py_RETURN_NONE;
 }
 
+PyObject * testmod_func_animal_get_vcpu(PyObject * self, PyObject *args)
+{
+    Animal_Repr * animal_r = NULL;
+    VCPU_Repr * vcpu_r = NULL;
+    int idx;
+    
+    if (! PyArg_ParseTuple(args, "OiO", &animal_r, &idx, &vcpu_r))
+        Py_RETURN_NONE;
+        
+    Animal * animal = &animal_r->animal;
+    if ((idx < 0) || (idx >= animal->thread_count))
+        Py_RETURN_NONE;
+        
+    memcpy(&vcpu_r->vcpu, &animal->vcpus[idx], sizeof(VCPU));
+    
+    Py_RETURN_NONE;
+}
+
+PyObject * testmod_func_animal_set_vcpu(PyObject * self, PyObject *args)
+{
+    Animal_Repr * animal_r = NULL;
+    VCPU_Repr * vcpu_r = NULL;
+    int idx;
+    
+    if (! PyArg_ParseTuple(args, "OiO", &animal_r, &idx, &vcpu_r))
+        Py_RETURN_NONE;
+        
+    Animal * animal = &animal_r->animal;
+    if ((idx < 0) || (idx >= animal->thread_count))
+        Py_RETURN_NONE;
+        
+    memcpy(&animal->vcpus[idx], &vcpu_r->vcpu, sizeof(VCPU));
+    
+    Py_RETURN_NONE;
+}
+
 
 
 PyObject * testmod_animal_run_tick(PyObject *self, PyObject *args)

@@ -89,7 +89,8 @@ static PyMemberDef Animal_Repr_members[] =
     {"y", T_INT, offsetof(Animal_Repr, animal.unitvarstruct.x), 0, "int"},
     {"direction", T_INT, offsetof(Animal_Repr, animal.one_thread_per_tick), 0, "int"},
     {"stop_on_action", T_INT, offsetof(Animal_Repr, animal.stop_on_action), 0, "int"},
-    {"maxsteps", T_INT, offsetof(Animal_Repr, animal.maxsteps), 0, "int"},        
+    {"maxsteps", T_INT, offsetof(Animal_Repr, animal.maxsteps), 0, "int"},
+    {"local_type", T_INT, offsetof(Animal_Repr, local_type), 0, "int"},
     {NULL}
 };
 

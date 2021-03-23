@@ -16,6 +16,7 @@ extern PyTypeObject Animal_Repr_Type;
 
 typedef struct {
     PyObject_HEAD
+    int local_type;
     Animal animal;
 } Animal_Repr;
 
