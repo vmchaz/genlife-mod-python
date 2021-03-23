@@ -22,17 +22,16 @@ static PyObject * Hazard_Repr_new(PyTypeObject *type, PyObject *args, PyObject *
 // Освобождение структуры
 static void Hazard_Repr_dealloc(Hazard_Repr * self) 
 {
-    //Hazard_Repr_deinit_callback(self);
     Py_TYPE(self)->tp_free((PyObject*)self);
 }
 
 
 // Инициализация структуры, заполняем её переданными значениями
-static int Hazard_Repr_init(Hazard_Repr *self, PyObject *args, PyObject *kwds) {
-        
+static int Hazard_Repr_init(Hazard_Repr *self, PyObject *args, PyObject *kwds) 
+{
     self->local_type = ftHAZARD;
-    self->local_subtype = 1;
-
+    self->local_subtype = fstDEFAULT;
+    self->hazard.damage = 1000;
     return 0;
 }
 

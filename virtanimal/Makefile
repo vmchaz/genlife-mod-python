@@ -24,6 +24,12 @@ OBJS = $(BUILD)/test.o \
 	$(BUILD)/fieldpart_repr.o \
 	$(BUILD)/instructionsequence.o \
 	$(BUILD)/instructionsequence_repr.o \
+	$(BUILD)/food.o \
+	$(BUILD)/food_repr.o \
+	$(BUILD)/obstacle.o \
+	$(BUILD)/obstacle_repr.o \
+	$(BUILD)/hazard.o \
+	$(BUILD)/hazard_repr.o \
 	$(BUILD)/callbackinfo.o \
 	$(BUILD)/advanced_func.o
 
@@ -83,6 +89,30 @@ $(BUILD)/instructionsequence.o: $(DEPS) \
 $(BUILD)/instructionsequence_repr.o: $(DEPS) \
 	$(SRC)/instructionsequence_repr.c
 	$(CC) -c $(CFLAGS) -fPIC $(INCS) -o $(BUILD)/instructionsequence_repr.o $(SRC)/instructionsequence_repr.c
+	
+$(BUILD)/obstacle.o: $(DEPS) \
+	$(SRC)/obstacle.c
+	$(CC) -c $(CFLAGS) -fPIC $(INCS) -o $(BUILD)/obstacle.o $(SRC)/obstacle.c
+	
+$(BUILD)/obstacle_repr.o: $(DEPS) \
+	$(SRC)/obstacle_repr.c
+	$(CC) -c $(CFLAGS) -fPIC $(INCS) -o $(BUILD)/obstacle_repr.o $(SRC)/obstacle_repr.c
+
+$(BUILD)/food.o: $(DEPS) \
+	$(SRC)/food.c
+	$(CC) -c $(CFLAGS) -fPIC $(INCS) -o $(BUILD)/food.o $(SRC)/food.c
+	
+$(BUILD)/food_repr.o: $(DEPS) \
+	$(SRC)/food_repr.c
+	$(CC) -c $(CFLAGS) -fPIC $(INCS) -o $(BUILD)/food_repr.o $(SRC)/food_repr.c
+	
+$(BUILD)/hazard.o: $(DEPS) \
+	$(SRC)/hazard.c
+	$(CC) -c $(CFLAGS) -fPIC $(INCS) -o $(BUILD)/hazard.o $(SRC)/hazard.c
+	
+$(BUILD)/hazard_repr.o: $(DEPS) \
+	$(SRC)/hazard_repr.c
+	$(CC) -c $(CFLAGS) -fPIC $(INCS) -o $(BUILD)/hazard_repr.o $(SRC)/hazard_repr.c
 	
 $(BUILD)/callbackinfo.o: $(DEPS) \
 	$(SRC)/callbackinfo.c

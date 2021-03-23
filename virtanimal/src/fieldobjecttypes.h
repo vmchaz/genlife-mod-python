@@ -7,6 +7,11 @@
 #define ftFOOD 3
 #define ftHAZARD 4
 
+#define fstDEFAULT 1
+
+#define fstANIMAL_DEFAULT 1
+#define fstOBSTACLE_DEFAULT 1
+
 #define fstPREY 1
 #define fstPREDATOR 2
 

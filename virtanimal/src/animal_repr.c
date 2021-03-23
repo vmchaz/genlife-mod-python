@@ -1,5 +1,6 @@
 //#include "test.h"
 #include <Python.h>
+#include "animal.h"
 #include "animal_repr.h"
 #include "actions.h"
 
@@ -72,7 +73,7 @@ static int Animal_Repr_init(Animal_Repr *self, PyObject *args, PyObject *kwds) {
     self->animal.unitvarstruct.action_p = 0;
     self->animal.unitvarstruct.use_action_p = 0;
     self->local_type = ftANIMAL;
-    self->local_subtype = fstPREY;
+    self->local_subtype = fstANIMAL_DEFAULT;
 
     return 0;
 }
@@ -88,8 +89,8 @@ static PyMemberDef Animal_Repr_members[] =
     {"action_p", T_INT, offsetof(Animal_Repr, animal.unitvarstruct.action_p), 0, "int"},
     {"use_action_p", T_INT, offsetof(Animal_Repr, animal.unitvarstruct.use_action_p), 0, "int"},
     {"x", T_INT, offsetof(Animal_Repr, animal.unitvarstruct.x), 0, "int"},
-    {"y", T_INT, offsetof(Animal_Repr, animal.unitvarstruct.x), 0, "int"},
-    {"direction", T_INT, offsetof(Animal_Repr, animal.one_thread_per_tick), 0, "int"},
+    {"y", T_INT, offsetof(Animal_Repr, animal.unitvarstruct.y), 0, "int"},
+    {"direction", T_INT, offsetof(Animal_Repr, animal.unitvarstruct.direction), 0, "int"},
     {"stop_on_action", T_INT, offsetof(Animal_Repr, animal.stop_on_action), 0, "int"},
     {"maxsteps", T_INT, offsetof(Animal_Repr, animal.maxsteps), 0, "int"},
     {"local_type", T_INT, offsetof(Animal_Repr, local_type), 0, "int"},

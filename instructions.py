@@ -1,4 +1,5 @@
 from enum import IntEnum, auto
+from functools import reduce
 
 class InstructionSet(IntEnum):
     cmdNOP = auto()
@@ -253,4 +254,7 @@ class Instruction:
         flags_target = flags_to_int(self.flags_target)
 
         return f"{cmd}, {reg_dest}, {reg_src}, {imm}, {flags_allow}, {flags_deny}, {flags_target}"        
+        
+    def to_tuple(self):
+        return (int(self.cmd), self.reg_dest if self.reg_dest else 0, self.reg_src if self.reg_src else 0, self.imm if self.imm else 0, reduce(lambda p,c:p*2+c,reversed(self.flags_allow)), reduce(lambda p,c:p*2+c,reversed(self.flags_deny)), reduce(lambda p,c:p*2+c,reversed(self.flags_target)))
 

@@ -56,7 +56,7 @@ class Assembler:
             cFLAG_DENY = 2
             cFLAG_TARGET = 3
             
-            cFlagNames = ["C:", "A:", "D:", "T:"]
+            cFlagNames = ["C:", "A:", "FA:", "D:", "FD:", "T:", "FT:"]
             
             st = cMAIN
             cmd = arg_list.pop(0)
@@ -80,16 +80,23 @@ class Assembler:
                     elif st == cFLAG_TARGET:
                         target_flags.append(arg)
                 else:
-                    st = cFlagNames.index(arg)
+                    if (arg == "A:") or (arg == "FA:"):
+                        st = 1
+                    if (arg == "D:") or (arg == "FD:"):
+                        st = 2
+                    if (arg == "T:") or (arg == "FA:"):
+                        st = 3
+                        
+                    #st = cFlagNames.index(arg)
             
                     
             instruction = Instruction()
             instruction.cmd = self.str_to_command[cmd]
 
-            if len(arg_list) < len(cInstructionArguments[instruction.cmd]):
+            if len(main_args) < len(cInstructionArguments[instruction.cmd]):
                 raise Exception("Too few arguments")
 
-            if len(arg_list) > len(cInstructionArguments[instruction.cmd]):
+            if len(main_args) > len(cInstructionArguments[instruction.cmd]):
                 raise Exception("Too many arguments")
             
             for arg_type, arg_in_command in zip(cInstructionArguments[instruction.cmd], arg_list):
